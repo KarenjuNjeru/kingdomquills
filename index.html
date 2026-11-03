@@ -486,16 +486,22 @@ const mpesaPhone = (p) => {
   else if (/^[17]\d{8}$/.test(d)) d = '254' + d;
   return d;
 };
-const stkPush = (order) => api('/api/daraja/stk/push', {
-  method: 'POST',
-  body: {
-    phone: mpesaPhone(order.phone),
-    amount: Math.round(order.total),
-    reference: String(order.id),
-    description: 'Kingdom Quills order ' + order.id,
-    buyGoods: false
-  }
-});
+const stkPush = async (order) => {
+  const res = await fetch(CONFIG.apiBase + '/api/daraja/stk/push', {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain' },   // simple request: no preflight
+    body: JSON.stringify({
+      phone: mpesaPhone(order.phone),
+      amount: Math.round(order.total),
+      reference: String(order.id),
+      description: 'Quills order',                // Safaricom limit is ~13 chars
+      buyGoods: false
+    })
+  });
+  const data = await res.json().catch(() => null);
+  if (!res.ok) throw new Error((data && (data.error || data.message)) || 'Request failed (' + res.status + ')');
+  return data;
+};
 
 async function placeOrder(viaWa) {
   const name = val('c-name'), phone = val('c-phone'), address = val('c-addr'), note = val('c-note');
