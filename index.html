@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kingdom Quills | Notebooks, pens, paper and office supplies</title>
-<meta name="description" content="Notebooks, pens, paper and desk basics delivered to your door. Pay on delivery.">
+<meta name="description" content="Notebooks, pens, paper and desk basics delivered to your door. Pay on checkout.">
 <meta name="theme-color" content="#14224F">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
@@ -134,11 +134,8 @@ footer{background:#102925;color:#b9c9c0;margin-top:0}.foot{display:grid;grid-tem
 @media(max-width:560px){.wrap{padding-left:17px;padding-right:17px}.announce .wrap{gap:6px 16px;font-size:10px}.nav-in{height:68px;gap:10px}.brand{font-size:23px}.logo{width:37px;height:37px}.bag{padding:9px 12px;font-size:12px}.hero h1{font-size:47px;padding-left:17px}.hero p.lead,.hero .acts,.chips-row{padding-left:17px}.tag{margin-left:17px}.pile{height:270px}.sh{align-items:start;flex-direction:column}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card{padding:8px 8px 12px;border-radius:14px}.card h3{font-size:20px;min-height:40px}.price{font-size:22px}.buy{margin:10px 3px 0;align-items:flex-start;flex-direction:column}.btn.sm{padding:8px 13px}.cats{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.cat-t{padding:9px}.cat-t b{font-size:20px}.cta{padding:28px 23px}.pp{gap:25px}.pp .price{font-size:33px}.co{padding-top:30px}.panel{padding:18px}.foot{padding-top:40px}.adm h1{font-size:36px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 
-
-
 /* Premium interaction additions */
 .product-card{position:relative}.wish{position:absolute;z-index:3;right:14px;top:14px;width:38px;height:38px;border:1px solid var(--line);border-radius:50%;background:rgba(255,255,255,.94);color:var(--ink);display:grid;place-items:center;cursor:pointer;box-shadow:0 4px 12px rgba(20,40,34,.08);transition:.2s}.wish:hover,.wish.saved{color:#b85c55;border-color:#e8c9c5;background:#fff}.wish i{font-size:17px}.product-title-row{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}.detail-wish{position:static;flex:none}.newsletter{display:grid;grid-template-columns:1fr minmax(300px,.8fr);gap:32px;align-items:center;padding:36px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(135deg,#f7f4ed,#f4f7f3)}.newsletter h2{font-size:clamp(28px,4vw,42px);margin:8px 0}.newsletter p{margin:0;color:var(--muted)}.newsletter form{display:grid;grid-template-columns:1fr auto;gap:10px}.newsletter input{min-width:0;border:1px solid #dfe5df;border-radius:999px;padding:13px 17px;background:white}.newsletter small{grid-column:1/-1;color:var(--ink2);min-height:20px}@media(max-width:700px){.newsletter{grid-template-columns:1fr;padding:24px}.newsletter form{grid-template-columns:1fr}.newsletter form .btn{width:100%}}
-
 </style>
 </head>
 <body>
@@ -148,7 +145,7 @@ footer{background:#102925;color:#b9c9c0;margin-top:0}.foot{display:grid;grid-tem
 <radialGradient id="gs"><stop offset="0" stop-color="#101840" stop-opacity=".28"/><stop offset="1" stop-color="#101840" stop-opacity="0"/></radialGradient>
 </defs></svg>
 
-<div class="announce"><div class="wrap container"><span><b>Pay on delivery</b>, no card needed</span><span>Bulk orders for schools &amp; offices</span><span>Order any time on <b>WhatsApp</b></span></div></div>
+<div class="announce"><div class="wrap container"><span><b>Pay on checkout</b> with M-Pesa</span><span>Bulk orders for schools &amp; offices</span><span>Order any time on <b>WhatsApp</b></span></div></div>
 
 <div class="nav">
   <div class="wrap container nav-in">
@@ -170,7 +167,7 @@ footer{background:#102925;color:#b9c9c0;margin-top:0}.foot{display:grid;grid-tem
 
 <footer>
   <div class="wrap container foot">
-    <div><h4>Kingdom Quills</h4><p>Notebooks, pens, paper and office supplies for school, church and business. Delivered to your door, paid on delivery.</p></div>
+    <div><h4>Kingdom Quills</h4><p>Notebooks, pens, paper and office supplies for school, church and business. Delivered to your door, paid at checkout with M-Pesa.</p></div>
     <div><h4>Shop</h4><a href="#/shop">All products</a><a id="f-bulk" href="#" target="_blank" rel="noopener">Bulk orders</a><a href="#/checkout">Checkout</a></div>
     <div><h4>Contact</h4><a id="f-wa" href="#" target="_blank" rel="noopener">Order on WhatsApp</a><a href="#/admin">Shop admin</a></div>
   </div>
@@ -218,7 +215,7 @@ async function api(path, opts = {}) {
   const data = res.status === 204 ? null : await res.json().catch(() => null);
   if (!res.ok) {
     if (res.status === 401 && token) sessionStorage.removeItem('sasu.token');
-    throw new Error((data && data.error) || 'Request failed (' + res.status + ')');
+    throw new Error((data && (data.error || data.message)) || 'Request failed (' + res.status + ')');
   }
   return data;
 }
@@ -237,7 +234,7 @@ const lines = () => cart.flatMap((l) => { const p = prod(l.id); return p ? [{ ..
 const subtotal = () => lines().reduce((n, l) => n + l.price * l.qty, 0);
 const waNumber = (phone) => { const d = String(phone).replace(/\D/g, ''); return d.startsWith('0') ? CONFIG.countryCode + d.slice(1) : d; };
 const waLink = (t) => `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(t)}`;
-const ui = { q: '', cat: 'All', sort: 'featured', edit: null, msg: '', draftImg: '', loading: true };
+const ui = { q: '', cat: 'All', sort: 'featured', edit: null, msg: '', draftImg: '', loading: true, pending: null };
 
 function setQty(id, n) {
   const p = prod(id); if (!p) return;
@@ -283,11 +280,11 @@ function pageHome() {
   const feat = products.filter((p) => p.stock > 0).slice(0, 4);
   const hero = products.slice(0, 3);
   return `<section class="hero"><div class="wrap container hero-in"><div>
-    <span class="tag">Pay when your order arrives</span>
+    <span class="tag">Pay at checkout with M-Pesa</span>
     <h1>Stationery for school, office and <em>everything</em> in between.</h1>
     <p class="lead">Notebooks, pens, paper and desk basics, delivered to your door. Ordering in bulk for a school or business? Message us.</p>
     <div class="acts"><a class="btn y" href="#/shop">Shop all products</a><a class="btn ghost" href="${waLink('Hello, I would like to ask about a bulk order.')}" target="_blank" rel="noopener">Ask about bulk orders</a></div>
-    <div class="chips-row"><span>✓ Pay on delivery</span><span>✓ Bulk orders</span><span>✓ WhatsApp ordering</span></div></div>
+    <div class="chips-row"><span>✓ Pay on checkout</span><span>✓ Bulk orders</span><span>✓ WhatsApp ordering</span></div></div>
     <div class="pile" aria-hidden="true">${hero.map((p) => media(p)).join('')}</div></div></section>
   <section class="s"><div class="wrap container"><div class="sh"><div><h2>Shop by category</h2><p>Find what you need fast.</p></div><a href="#/shop">View all</a></div><div class="cats">${cats().map((c) => { const items = products.filter((p) => p.category === c);
     return `<a class="cat-t" href="#/shop" data-a="gocat" data-id="${esc(c)}">${media(items[0])}<span><b>${esc(c)}</b><span class="go">${items.length} item${items.length > 1 ? 's' : ''} →</span></span></a>`; }).join('')}</div></div></section>
@@ -296,7 +293,7 @@ function pageHome() {
   ${recentlyViewed.length ? `<section class="s tint"><div class="wrap container"><div class="sh"><div><h2>Recently viewed</h2><p>Pick up where you left off.</p></div></div><div class="grid">${recentlyViewed.map(id => prod(id)).filter(Boolean).map(card).join('')}</div></div></section>` : ''}
   <section class="s"><div class="wrap container"><div class="perks">
     <div class="perk"><div class="ic">🚚</div><h3>Delivered to your door</h3><p>Tell us where you are at checkout and we confirm the delivery fee before dispatch.</p></div>
-    <div class="perk"><div class="ic">💵</div><h3>Pay on delivery</h3><p>No card needed. Check your order, then pay when it arrives.</p></div>
+    <div class="perk"><div class="ic">💵</div><h3>Pay on checkout</h3><p>No card needed. Place your order and approve the M-Pesa prompt on your phone.</p></div>
     <div class="perk"><div class="ic">📦</div><h3>Bulk orders welcome</h3><p>Schools, churches and offices can order by the box or ream at a better price.</p></div></div></div></section>
   <section class="s" style="padding-top:0"><div class="wrap container"><div class="cta"><div><h2>Stocking up for the term?</h2><p>Send us your list on WhatsApp and we will put together a quote for your school, church or office.</p></div><a class="btn y" href="${waLink('Hello, I would like a quote for a bulk order.')}" target="_blank" rel="noopener">Get a quote</a></div></div></section>
   <section class="s"><div class="wrap container"><div class="newsletter"><div><span class="tag">THE KINGDOM QUILLS LETTER</span><h2>Thoughtful supplies. Useful updates.</h2><p>Get occasional product news and restock updates. No noise, just the good things.</p></div><form id="newsletter-form"><input id="newsletter-email" type="email" required maxlength="254" placeholder="Your email address" aria-label="Email address"><button class="btn" type="submit">Join the list <i class="bi bi-arrow-right"></i></button><small id="newsletter-msg" role="status"></small></form></div></div></section>`;
@@ -337,12 +334,12 @@ function pageCheckout() {
   return `<div class="wrap container"><div class="co"><div><h1>Checkout</h1>
   <div class="steps"><span class="on"><i>1</i>Basket</span><span class="on"><i>2</i>Your details</span><span><i>3</i>Confirmation</span></div>
   <label class="field"><span>Your name</span><input id="c-name" autocomplete="name"></label>
-  <label class="field"><span>Phone number</span><input id="c-phone" inputmode="tel" autocomplete="tel"></label>
+  <label class="field"><span>Phone number (M-Pesa)</span><input id="c-phone" inputmode="tel" autocomplete="tel" placeholder="0712345678"></label>
   <label class="field"><span>Delivery address or pickup</span><input id="c-addr" autocomplete="street-address" placeholder="Estate, street, landmark"></label>
   <label class="field"><span>Note for the shop (optional)</span><textarea id="c-note"></textarea></label>
   <p class="err" id="cerr" role="alert"></p>
   <button class="btn wa block" data-a="order-wa">Send order on WhatsApp</button>
-  <button class="btn y block" style="margin-top:10px" data-a="order-cod">Place order, pay on delivery</button></div>
+  <button class="btn y block" style="margin-top:10px" data-a="order-cod">Pay on checkout (M-Pesa)</button></div>
   <div class="panel sticky"><h3 style="margin-bottom:8px;font-size:20px">Order summary</h3>${ls.map((l) => `<div class="line">${media(l)}<div class="g"><b>${esc(l.name)}</b><span class="muted">${l.qty} × ${money(l.price)}</span></div><b>${money(l.qty * l.price)}</b></div>`).join('')}
   <div class="sum" style="margin-top:16px"><span>Total</span><span>${money(subtotal())}</span></div><p class="muted" style="margin:0;font-size:14px">Delivery fee is confirmed with you before dispatch.</p></div></div></div>`;
 }
@@ -350,7 +347,9 @@ function pageDone(ref) {
   const o = orders.find((x) => x.id === ref) || ld('sasu.last', null);
   if (!o || o.id !== ref) return `<div class="empty wrap"><h2>Order not found</h2><p><a href="#/">Back home</a></p></div>`;
   return `<div class="wrap container"><div class="done"><div class="tick">✓</div><h1>Thank you, ${esc(o.name.split(' ')[0])}</h1><div class="ref">Order ${esc(o.id)}</div>
-  <p class="muted">We will call or message ${esc(o.phone)} to confirm delivery. You pay ${money(o.total)} when your order arrives.</p>
+  <p class="muted">${o.via === 'mpesa'
+    ? `An M-Pesa prompt for ${money(o.total)} has been sent to ${esc(o.phone)}. Enter your PIN to complete payment, and we will confirm delivery shortly.`
+    : `We will call or message ${esc(o.phone)} to confirm your order.`}</p>
   <p><a class="btn" href="#/shop">Keep shopping</a></p></div></div>`;
 }
 
@@ -480,15 +479,46 @@ async function doLogin() {
   render();
 }
 
+/* ===== M-Pesa STK push (Daraja via your Spring backend, same ngrok base) ===== */
+const mpesaPhone = (p) => {
+  let d = String(p).replace(/\D/g, '');
+  if (d.startsWith('0')) d = '254' + d.slice(1);
+  else if (/^[17]\d{8}$/.test(d)) d = '254' + d;
+  return d;
+};
+const stkPush = (order) => api('/api/daraja/stk/push', {
+  method: 'POST',
+  body: {
+    phone: mpesaPhone(order.phone),
+    amount: Math.round(order.total),
+    reference: String(order.id),
+    description: 'Kingdom Quills order ' + order.id,
+    buyGoods: false
+  }
+});
+
 async function placeOrder(viaWa) {
   const name = val('c-name'), phone = val('c-phone'), address = val('c-addr'), note = val('c-note');
   if (!name || !phone || !address) { $('#cerr').textContent = 'Add your name, phone number and delivery address.'; return; }
+  if (!viaWa && !/^254[17]\d{8}$/.test(mpesaPhone(phone))) { $('#cerr').textContent = 'Enter a valid M-Pesa number, e.g. 0712345678.'; return; }
   const w = viaWa ? window.open('', '_blank') : null;           // open now so pop-up blockers allow it
   const btns = document.querySelectorAll('[data-a^=order-]'); btns.forEach((b) => (b.disabled = true));
+  const codBtn = $('[data-a=order-cod]'); const codLabel = codBtn ? codBtn.textContent : '';
   try {
-    const order = await api('/api/orders', { method: 'POST',
-      body: { name, phone, address, note, lines: lines().map((l) => ({ id: l.id, qty: l.qty })) } });
-    orders.unshift(order); sv('sasu.last', order); cart = []; ui.msg = ''; save();
+    let order = viaWa ? null : ui.pending;
+    if (!order) {
+      order = await api('/api/orders', { method: 'POST',
+        body: { name, phone, address, note, lines: lines().map((l) => ({ id: l.id, qty: l.qty })) } });
+      order.via = viaWa ? 'wa' : 'mpesa';
+      orders.unshift(order); sv('sasu.last', order);
+      if (!viaWa) ui.pending = order;
+    }
+    if (!viaWa) {
+      if (codBtn) codBtn.textContent = 'Sending M-Pesa prompt…';
+      await stkPush(order);
+      ui.pending = null;
+    }
+    cart = []; ui.msg = ''; save();
     await loadProducts().catch(() => {});
     if (w) w.location = waLink(`Hello ${CONFIG.name}, I would like to order (ref ${order.id}):\n` +
       order.lines.map((l) => `${l.qty} x ${l.name} = ${money(l.qty * l.price)}`).join('\n') +
@@ -496,8 +526,15 @@ async function placeOrder(viaWa) {
     location.hash = '#/done/' + order.id;
   } catch (e) {
     if (w) w.close();
-    $('#cerr').textContent = e.message; btns.forEach((b) => (b.disabled = false));
-    await loadProducts().catch(() => {}); drawCart();
+    btns.forEach((b) => (b.disabled = false));
+    if (ui.pending) {
+      $('#cerr').textContent = `Order ${ui.pending.id} was placed, but the M-Pesa prompt failed: ${e.message}. Tap the button to try again.`;
+      if (codBtn) codBtn.textContent = 'Resend M-Pesa prompt';
+    } else {
+      $('#cerr').textContent = e.message;
+      if (codBtn) codBtn.textContent = codLabel;
+      await loadProducts().catch(() => {}); drawCart();
+    }
   }
 }
 
@@ -553,7 +590,7 @@ async function enter() {
   }
   render();
 }
-addEventListener('hashchange', () => { openCart(false); ui.msg = ''; if (!(location.hash || '').startsWith('#/admin/products')) ui.edit = null; enter(); });
+addEventListener('hashchange', () => { openCart(false); ui.msg = ''; ui.pending = null; if (!(location.hash || '').startsWith('#/admin/products')) ui.edit = null; enter(); });
 $('#yr').textContent = new Date().getFullYear();
 ['n-wa', 'f-wa', 'fab'].forEach((id) => { $('#' + id).href = waLink('Hello ' + CONFIG.name + ', I would like to place an order.'); });
 $('#f-bulk').href = waLink('Hello ' + CONFIG.name + ', I would like to ask about a bulk order.');
