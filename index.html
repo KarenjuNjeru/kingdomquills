@@ -145,6 +145,53 @@ footer{background:#102925;color:#b9c9c0}
 @media(max-width:900px){.links,.nsearch{display:none}.bag{margin-left:auto}.hero-in{grid-template-columns:1fr;padding-top:44px;padding-bottom:44px;gap:28px}.pile{height:300px}.pp,.co,.two,.foot{grid-template-columns:1fr;gap:24px}.panel.sticky{position:static}.adm{grid-template-columns:1fr;gap:12px}.side{position:static;flex-direction:row;overflow:auto}.side a,.side button{white-space:nowrap}.fgrid{grid-template-columns:1fr}.cta{padding:30px}.fab span{display:none}.fab{padding:13px}}
 @media(max-width:560px){.wrap{padding:0 15px}.announce .wrap{gap:4px 14px;font-size:10px}.nav-in{height:60px;gap:8px}.brand{font-size:21px}.logo{width:34px;height:34px}.hero h1{font-size:42px}.pile{height:250px}.sh{align-items:start;flex-direction:column}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.card{padding:7px 7px 11px;border-radius:13px}.card h3{font-size:18px;min-height:36px}.price{font-size:20px}.buy{align-items:flex-start;flex-direction:column}.cats{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.cat-t b{font-size:18px}.cta{padding:24px 20px}.panel{padding:16px}.adm h1{font-size:32px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ===== layout upgrade ===== */
+.wrap{max-width:1160px}
+.perk{display:grid;grid-template-columns:auto 1fr;gap:2px 14px;align-items:start;padding:20px}
+.perk .ic{grid-row:span 2;width:46px;height:46px;border-radius:14px;background:#edf2ee;display:grid;place-items:center;font-size:22px;margin:0}
+.perk h3{font-size:21px;margin:0}
+.cat-t .media{aspect-ratio:4/3}
+.card{padding:10px 10px 14px;contain-intrinsic-size:auto 340px;transition:box-shadow .2s,border-color .2s}
+.card h3{font-size:19px;line-height:1.25;height:2.5em;min-height:0;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.buy{margin:auto 4px 0;padding-top:12px}
+.wish{width:40px;height:40px;top:14px;right:14px}
+.bar{position:sticky;top:69px;z-index:20;background:#fff;padding:10px 0;margin-bottom:18px;border-bottom:1px solid var(--line)}
+.chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}.chip{flex:none}
+.pp>.media{position:sticky;top:90px}
+.trust{list-style:none;margin:18px 0 0;padding:16px 0 0;border-top:1px solid var(--line);display:grid;gap:8px;font-size:13px;color:#52635b}
+.sk{background:linear-gradient(90deg,#f0f2ef 25%,#f7f8f6 40%,#f0f2ef 60%);background-size:300% 100%;animation:sk 1.2s linear infinite;border-radius:16px}
+.sk-card{aspect-ratio:3/4}
+@keyframes sk{from{background-position:100% 0}to{background-position:0 0}}
+.tabbar{display:none}
+@media(max-width:900px){
+  body{padding-bottom:calc(62px + env(safe-area-inset-bottom,0px))}
+  .nav{position:static}
+  .nav-in{flex-wrap:wrap;height:auto;padding:10px 0;gap:10px}
+  .brand{margin-right:auto}
+  .bag{display:none}
+  .nsearch{display:block;order:3;flex:1 0 100%;max-width:none;margin:0}
+  .bar{top:0}
+  .pp>.media{position:static}
+  .fab{display:none}
+  .toast{bottom:78px}
+  .tabbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:34;background:#fff;border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+  .tabbar a,.tabbar button{flex:1;display:flex;flex-direction:column;align-items:center;gap:1px;padding:7px 0 6px;font-size:10px;font-weight:600;color:#697771;text-decoration:none;background:none;border:0;cursor:pointer;position:relative;line-height:1.3}
+  .tabbar b{font-size:19px;font-weight:400;line-height:1.2}
+  .tabbar .on{color:var(--ink)}
+  .tabbar i{position:absolute;top:2px;left:calc(50% + 6px);font-style:normal;background:var(--gold);color:var(--ink);min-width:17px;height:17px;border-radius:99px;display:grid;place-items:center;font-size:10px;font-weight:700;padding:0 4px}
+  .buyrow{position:sticky;bottom:calc(62px + env(safe-area-inset-bottom,0px));background:#fff;padding:10px 0;margin:16px 0;z-index:5}
+}
+@media(max-width:560px){
+  .announce .wrap{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;white-space:nowrap}
+  .hero-in{padding-top:34px;padding-bottom:34px}
+  .pile{display:none}
+  .buy{flex-direction:row;align-items:center;flex-wrap:wrap;gap:6px}
+  .price{font-size:19px}
+  .card h3{font-size:17px}
+  .perk{padding:16px}
+}
+@media(prefers-reduced-motion:reduce){.sk{animation:none}}
 </style>
 </head>
 <body>
@@ -159,7 +206,7 @@ footer{background:#102925;color:#b9c9c0}
   <a class="brand" href="#/"><span class="logo" id="site-logo"></span>Kingdom Quills</a>
   <nav class="links" aria-label="Main"><a href="#/" id="n-home">Home</a><a href="#/shop" id="n-shop">Shop</a><a id="n-wa" href="#" target="_blank" rel="noopener">WhatsApp us</a></nav>
   <form class="nsearch" id="nsearch" role="search"><label class="sr" for="nq">Search products</label><input id="nq" placeholder="Search notebooks, pens, paper" autocomplete="off"></form>
-  <button class="bag" data-a="open-cart" aria-label="Open basket">Basket <i id="count">0</i></button>
+  <button class="bag" data-a="open-cart" aria-label="Open basket">Basket <i class="cnt">0</i></button>
 </div></div>
 
 <main id="app"></main>
@@ -174,6 +221,12 @@ footer{background:#102925;color:#b9c9c0}
 </footer>
 
 <a class="fab" id="fab" href="#" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">💬 <span>Chat with us</span></a>
+<nav class="tabbar" aria-label="Quick links">
+  <a href="#/" id="b-home"><b>🏠</b>Home</a>
+  <a href="#/shop" id="b-shop"><b>🛍️</b>Shop</a>
+  <a id="b-wa" href="#" target="_blank" rel="noopener"><b>💬</b>WhatsApp</a>
+  <button data-a="open-cart" aria-label="Open basket"><b>🧺</b>Basket<i class="cnt">0</i></button>
+</nav>
 <div class="veil" id="veil" data-a="close-cart"></div>
 <aside class="drawer" id="drawer" aria-label="Basket" aria-hidden="true"></aside>
 <div class="toast" id="toast" role="status"></div>
@@ -184,7 +237,9 @@ footer{background:#102925;color:#b9c9c0}
 // A base64 string still works too, but it makes the HTML itself bigger.
 const LOGO = '';
 const CONFIG = { name: 'Kingdom Quills', currency: 'KSh', whatsapp: '254795689004', countryCode: '254',
-  apiBase: 'https://fpo.ngrok.dev' /* '' when Spring serves this page */ };
+  apiBase: 'https://fpo.ngrok.dev' };
+// Same origin (page opened through the ngrok URL, or served by Spring) means no CORS at all.
+if (location.origin === CONFIG.apiBase || location.port === '8080') CONFIG.apiBase = '';
 
 /* ===== storage ===== */
 const ld = (k, d) => { try { const v = JSON.parse(localStorage.getItem(k)); return v ?? d; } catch { return d; } };
@@ -198,7 +253,7 @@ async function api(path, opts = {}) {
   const token = sessionStorage.getItem('sasu.token');
   const res = await fetch(CONFIG.apiBase + path, {
     method: opts.method || 'GET',
-    headers: { 'Content-Type': 'application/json', 'ngrok-skip-browser-warning': '1', ...(token ? { Authorization: 'Bearer ' + token } : {}) },
+    headers: { ...(opts.body ? { 'Content-Type': 'application/json' } : {}), ...(/ngrok/.test(CONFIG.apiBase) ? { 'ngrok-skip-browser-warning': '1' } : {}), ...(token ? { Authorization: 'Bearer ' + token } : {}) },
     body: opts.body ? JSON.stringify(opts.body) : undefined
   });
   const data = res.status === 204 ? null : await res.json().catch(() => null);
@@ -226,6 +281,7 @@ const prod = (id) => products.find((p) => p.id === id);
 const lines = () => cart.flatMap((l) => { const p = prod(l.id); return p ? [{ ...p, qty: Math.min(l.qty, p.stock) }] : []; }).filter((l) => l.qty > 0);
 const subtotal = () => lines().reduce((n, l) => n + l.price * l.qty, 0);
 const cartCount = () => cart.reduce((n, l) => n + l.qty, 0);
+const setCount = () => document.querySelectorAll('.cnt').forEach((e) => (e.textContent = cartCount()));
 const waNumber = (phone) => { const d = String(phone).replace(/\D/g, ''); return d.startsWith('0') ? CONFIG.countryCode + d.slice(1) : d; };
 const waLink = (t) => `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(t)}`;
 const ui = { q: '', cat: 'All', sort: 'featured', edit: null, msg: '', draftImg: '', loading: !products.length, pending: null };
@@ -268,7 +324,7 @@ const card = (p) => { const n = qtyOf(p.id);
   <div class="meta">${esc(p.category)}</div>
   <div class="buy"><b class="price">${money(p.price)}</b>${p.stock <= 0 ? '<span class="out">Out of stock</span>' : n ? stepper(p.id, n) : `<button class="btn sm" data-a="add" data-id="${p.id}">Add</button>`}</div></article>`; };
 const cats = () => [...new Set(products.map((p) => p.category))];
-const loadingBlock = '<div class="empty wrap"><h3>Loading the shop…</h3></div>';
+const loadingBlock = `<div class="wrap" style="padding:32px 0"><div class="grid">${'<div class="sk sk-card"></div>'.repeat(8)}</div></div>`;
 const listOf = (ids) => ids.map(prod).filter(Boolean);
 
 /* ===== pages ===== */
@@ -320,7 +376,8 @@ function pageProduct(id) {
   <p class="desc">${esc(p.desc || '')}</p>
   <div class="stock ${p.stock <= 0 ? 'none' : p.stock < 10 ? 'low' : ''}">${p.stock <= 0 ? 'Out of stock' : p.stock < 10 ? `Only ${p.stock} left` : 'In stock'}</div>
   ${p.stock > 0 ? `<div class="buyrow">${n ? stepper(p.id, n) : ''}<button class="btn" data-a="${n ? 'open-cart' : 'add'}" data-id="${p.id}">${n ? 'View basket' : 'Add to basket'}</button>
-  <a class="btn wa" target="_blank" rel="noopener" href="${waLink('Hello, I have a question about: ' + p.name)}">Ask on WhatsApp</a></div>` : ''}</div></div>
+  <a class="btn wa" target="_blank" rel="noopener" href="${waLink('Hello, I have a question about: ' + p.name)}">Ask on WhatsApp</a></div>` : ''}
+  <ul class="trust"><li>🚚 Delivery fee confirmed before dispatch</li><li>💵 Pay with M-Pesa at checkout</li><li>📦 Bulk prices on request</li></ul></div></div>
   ${rel.length ? `<div class="sh"><h2>More in ${esc(p.category)}</h2></div><div class="grid" style="padding-bottom:44px">${rel.map(card).join('')}</div>` : ''}</div>`;
 }
 function pageCheckout() {
@@ -397,8 +454,9 @@ function render(keep) {
     : a === 'done' ? pageDone(b) : a === 'admin' ? pageAdmin(b) : pageHome();
   $('#app').innerHTML = html;
   const s = $('#sort'); if (s) s.value = ui.sort;
-  $('#n-home').classList.toggle('on', !a); $('#n-shop').classList.toggle('on', a === 'shop');
-  $('#count').textContent = cartCount();
+  ['n-home', 'b-home'].forEach((i) => $('#' + i).classList.toggle('on', !a));
+  ['n-shop', 'b-shop'].forEach((i) => $('#' + i).classList.toggle('on', a === 'shop'));
+  setCount();
   drawCart();
   document.title = a === 'product' && prod(b) ? prod(b).name + ' | Kingdom Quills' : 'Kingdom Quills | Notebooks, pens, paper and office supplies';
   keep ? scrollTo(0, y) : scrollTo(0, 0);
@@ -417,7 +475,7 @@ function toast(html) { const t = $('#toast'); t.innerHTML = html; t.classList.ad
 /* ===== actions ===== */
 function afterCartChange() {
   const g = $('#shopgrid');
-  if (g) { g.innerHTML = gridHtml(); $('#count').textContent = cartCount(); drawCart(); } else render(true);
+  if (g) { g.innerHTML = gridHtml(); setCount(); drawCart(); } else render(true);
 }
 document.addEventListener('click', (ev) => {
   const t = ev.target.closest('[data-a]'); if (!t || t.tagName === 'SELECT') return;
@@ -572,7 +630,7 @@ addEventListener('hashchange', () => { openCart(false); ui.msg = ''; ui.pending 
 
 /* ===== boot ===== */
 $('#yr').textContent = new Date().getFullYear();
-['n-wa', 'f-wa', 'fab'].forEach((id) => { $('#' + id).href = waLink('Hello ' + CONFIG.name + ', I would like to place an order.'); });
+['n-wa', 'f-wa', 'fab', 'b-wa'].forEach((id) => { $('#' + id).href = waLink('Hello ' + CONFIG.name + ', I would like to place an order.'); });
 $('#f-bulk').href = waLink('Hello ' + CONFIG.name + ', I would like to ask about a bulk order.');
 if (LOGO) { const i = new Image(); i.alt = 'Kingdom Quills logo'; i.width = i.height = 38; i.src = LOGO.startsWith('data:') || LOGO.includes('.') ? LOGO : 'data:image/png;base64,' + LOGO; $('#site-logo').appendChild(i); }
 
